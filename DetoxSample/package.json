@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build-android": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "test-android": "npx cucumber-js e2e/features -- platform=android"
   },
   "dependencies": {
     "react": "16.8.3",
@@ -22,5 +24,25 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "detox": {
+    "androidConfig": {
+      "configurations": {
+        "android": {
+          "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+          "name": "Nexus6_Oreo",
+          "type": "android.emulator"
+        }
+      }
+    },
+    "iosConfig": {
+      "configurations": {
+        "ios": {
+          "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/SampleApp.app",
+          "type": "ios.simulator",
+          "name": "iPhone X"
+        }
+      }
+    }
   }
 }
